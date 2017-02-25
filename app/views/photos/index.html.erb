@@ -1,0 +1,84 @@
+<div class="page-header">
+  <a href="/photos/new" class="btn btn-default btn-block">
+    <i class="fa fa-plus"></i>
+  </a>
+</div>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped table-hover">
+
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <% @photos.each do |photo| %>
+            <tr>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a href="/users/<%= photo.user_id %>"><%= User.find(photo.user_id).username %></a>
+                    <small><%= time_ago_in_words(photo.created_at) %> ago</small>
+                  </h3>
+
+                </div>
+                <div class="panel-body">
+                  <a href="/photos/<%= photo.id %>">
+                    <img src="<%= photo.image %>" class="img-responsive">
+                  </a>
+
+                  <% if current_user.id == photo.user_id %>
+                  <div class="btn-group btn-group-justified">
+
+                    <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">
+                      Edit
+                    </a>
+                    <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">
+                      Delete
+                    </a>
+                  </div>
+                  <% end %>
+
+                  <form action="/create_like" method="post">
+                    <button class="btn btn-link">
+                      <i class="fa fa-heart fa-heart-o"></i>
+                    </button>
+                    <input name="photo_id" type="hidden" value="<%= photo.id %>">
+                    <input name="user_id" type="hidden" value="<%= current_user.id %>">
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                  </form>
+
+                  <% @comments.each do |comment| %>
+                  <% if comment.photo_id == photo.id %>
+                  <h6> <%= User.find(comment.user_id).username %> </h6>
+                  <p> <%= comment.body %></p>
+                  <% end %>
+                  <% end %>
+
+
+                  <form action="/create_comment" method="post">
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                    <input type="text" id="body" name="body" class="form-control" placeholder="Add a comment..." required>
+
+                    <button class="btn btn-default" type="submit">
+                      <i class="fa fa-commenting-o"></i>
+                    </button>
+
+                    <input name="photo_id" type="hidden" value="<%= photo.id %>">
+                    <input name="user_id" type="hidden" value="<%= current_user.id %>">
+                  </form>
+
+
+                </div>
+
+
+              </div>
+            </div>
+
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

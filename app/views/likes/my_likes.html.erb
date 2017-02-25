@@ -1,0 +1,8 @@
+<% @likes.each do |like| %>
+<% if like.user_id = current_user.id %>
+<% p = @photos.find_by(:id => like.photo_id) %>
+<li><%= p.caption %></li>
+<img src="<%= p.image %>" width="300"> </img>
+<% end %>
+
+<% end %>
