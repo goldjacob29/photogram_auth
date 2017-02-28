@@ -125,7 +125,7 @@ feature "Photos:", js: show_tests_in_browser do
     visit "/photos"
     new_comment = "Just added a comment at #{Time.now.to_f}"
     fill_in("Add a comment...", with: new_comment)
-    find(".fa-commenting-o").click
+    find(".fa-commenting-o").find(:xpath,".//..").click
 
     expect(page).to have_content(new_comment)
     expect(page).to have_current_path("/photos")
@@ -140,7 +140,7 @@ feature "Photos:", js: show_tests_in_browser do
     visit "/photos"
     new_comment = "Just added a comment at #{Time.now.to_f + Time.now.to_f}"
     fill_in("Add a comment...", with: new_comment)
-    find(".fa-commenting-o").click
+    find(".fa-commenting-o").find(:xpath,".//..").click
     visit "/comments"
 
     expect(page).to have_content(new_comment)
@@ -159,7 +159,7 @@ feature "Photos:", js: show_tests_in_browser do
     login_as(user, :scope => :user)
 
     visit "/photos"
-    find(".fa-heart-o").click
+    find(".fa-heart-o").find(:xpath,".//..").click
 
     expect(page).to have_css(".fa-heart")
   end

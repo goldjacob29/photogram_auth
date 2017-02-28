@@ -8,9 +8,9 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <div class="field" for="Username">
+  <div class="field">
     <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true, for: "Username", label: "Username", class: "form-control"%>
+    <%= f.text_field :username, autofocus: true, for: "Username", class: "form-control"%>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
