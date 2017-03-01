@@ -38,6 +38,7 @@
                   </div>
                   <% end %>
 
+                  <% if photo.likes.find_by(user_id: current_user.id) == nil %>
                   <form action="/create_like" method="post">
                     <button class="btn btn-link">
                       <i class="fa fa-heart fa-heart-o"></i>
@@ -46,6 +47,18 @@
                     <input name="user_id" type="hidden" value="<%= current_user.id %>">
                     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
                   </form>
+
+                  <% else %>
+                  <form action="/delete_like/<%= photo.likes.find_by(user_id: current_user.id).id %>" method="get">
+                    <button class="btn btn-link">
+                      <i class="fa fa-heart fa-heart-c"></i>
+                    </button>
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                  </form>
+
+                  <% end %>
+
+
 
                   <% @comments.each do |comment| %>
                   <% if comment.photo_id == photo.id %>
